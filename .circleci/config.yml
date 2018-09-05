@@ -13,19 +13,19 @@ jobs:
     steps:
       - checkout
       - run:
-        name: venv
-        command: |
-          python3 -m venv venv
-          . venv/bin/activate
-          pip install tox
+          name: load requirements
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install tox
       - run:
-        name: Wait for db
-        command: dockerize -wait tcp://localhost:3306 -timeout 1m
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
-        name: test
-        command: |
-          . venv/bin/activate
-          tox
+          name: test
+          command: |
+            . venv/bin/activate
+            tox
 workflows:
   version: 2
   test:
