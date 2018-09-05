@@ -20,7 +20,7 @@ Add MAX_CONNS to OPTIONS to set the maximun number of connections allowed to dat
 ```
 DATABASES = {
     'default': {
-        'ENGINE': 'django_db_geventpool.backends.postgresql_psycopg2',
+        'ENGINE': 'django_mysql_geventpool.backends.mysql',
         'NAME': 'dbname',
         'USER': 'dbuser',
         'PASSWORD': 'dbpassword',
