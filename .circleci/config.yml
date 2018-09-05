@@ -1,7 +1,6 @@
 version: 2
 jobs:
-  # using tox
-  toxify:
+  toxtest:
     docker:
       - image: circleci/python:3.6
       - image: mysql:5.7.22
@@ -15,18 +14,18 @@ jobs:
       - checkout
       - run:
         command: |
-         python3 -m venv venv
-         . venv/bin/activate
-         pip install tox
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install tox
       - run:
         name: Wait for db
         command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
         command: |
-         . venv/bin/activate
-         tox
+          . venv/bin/activate
+          tox
 workflows:
   version: 2
   test:
     jobs:
-      - toxify
+      - toxtest
