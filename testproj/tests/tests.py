@@ -1,10 +1,9 @@
-import gevent
-
 from unittest import TestCase
+import gevent
+from django_mysql_geventpool.utils import close_connection
+from django.db import connections
 
 from .models import TestModel
-
-from django_mysql_geventpool.utils import close_connection
 
 
 @close_connection
@@ -31,3 +30,4 @@ class ModelTest(TestCase):
         for x in range(0, 50):
             greenlets.append(gevent.spawn(test_multiple_connections, x))
         gevent.joinall(greenlets)
+        self.assertEqual(connections['default'].pool.maxsize, 20)
