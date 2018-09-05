@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='django-mysql-geventpool',
     version='0.1',
-    install_requires=['django>=2.1', 'greenlet', 'gevent'],
+    install_requires=['django>=2.0', 'gevent'],
     description='Add a MySQL connection pool for django using gevent',
     long_description=open("README.md").read(),
     packages=find_packages(),
