@@ -30,7 +30,6 @@ class DatabaseWrapper(OriginalDatabaseWrapper):
         settings_dict['CONN_MAX_AGE'] = 0
         self._max_cons = pop_max_conn(settings_dict)
         super(DatabaseWrapper, self).__init__(settings_dict, *args, **kwargs)
-        self.allow_thread_sharing = True
 
     @property
     def pool(self):
