@@ -4,7 +4,7 @@
 
 Mysql Connection Pooling backend for Django 2.0+ using gevent, only supports Python 3.4 or newer.
 
-This implimentation is based on django-db-gevent-tool(https://github.com/jneight/django-db-geventpool).
+This implimentation is based on django-db-geventpool(https://github.com/jneight/django-db-geventpool).
 
 ## install
 
