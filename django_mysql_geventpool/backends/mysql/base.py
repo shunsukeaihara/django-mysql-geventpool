@@ -56,7 +56,11 @@ class DatabaseWrapper(OriginalDatabaseWrapper):
             self.pool.closeall()
         else:
             with self.wrap_database_errors:
-                self.pool.put(self.connection)
+                if not self.in_atomic_block:
+                    self.pool.put(self.connection)
+                else:
+                    self.pool.put(None)
+                    self.connection.close()
 
     def closeall(self):
         for pool in connection_pools.values():

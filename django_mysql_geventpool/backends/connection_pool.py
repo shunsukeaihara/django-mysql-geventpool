@@ -33,6 +33,9 @@ class DatabaseConnectionPool:
             return conn
 
     def put(self, item):
+        if item is None:
+            self.size -= 1
+            return
         try:
             self.pool.put(item, timeout=2)
         except queue.Full:

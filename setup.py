@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='django-db-geventpool',
+    name='django-mysql-geventpool',
     version='0.01',
     install_requires=['django>=2.1', 'greenlet', 'gevent'],
     description='Add a MySQL connection pool for django using gevent',
