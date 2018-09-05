@@ -1,8 +1,8 @@
 # django-mysql-geventpool
 
-Mysql Connection Pooling backend for Django 2.0+ using gevent.
+Mysql Connection Pooling backend for Django 2.0+ using gevent. Only 
 
-This implimentation based on django-db-gevent-tool(https://github.com/jneight/django-db-geventpool).
+This implimentation is based on django-db-gevent-tool(https://github.com/jneight/django-db-geventpool).
 
 ## Settings
 
