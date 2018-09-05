@@ -17,7 +17,7 @@ connection_pools_lock = Semaphore(value=1)
 DEFAULT_MAX_CONNS = 4
 
 
-class DatabaseWrapper(OriginalDatabaseWrapper):
+class ConnectionPoolMixin:
     creation_class = DatabaseCreation
 
     def __init__(self, settings_dict, *args, **kwargs):
@@ -29,7 +29,7 @@ class DatabaseWrapper(OriginalDatabaseWrapper):
         self._pool = None
         settings_dict['CONN_MAX_AGE'] = 0
         self._max_cons = pop_max_conn(settings_dict)
-        super(DatabaseWrapper, self).__init__(settings_dict, *args, **kwargs)
+        super(ConnectionPoolMixin, self).__init__(settings_dict, *args, **kwargs)
 
     @property
     def pool(self):
@@ -64,3 +64,7 @@ class DatabaseWrapper(OriginalDatabaseWrapper):
     def closeall(self):
         for pool in connection_pools.values():
             pool.closeall()
+
+
+class DatabaseWrapper(ConnectionPoolMixin, OriginalDatabaseWrapper):
+    pass
