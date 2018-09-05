@@ -13,7 +13,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: load requirements
+          name: venv
           command: |
             python3 -m venv venv
             . venv/bin/activate
