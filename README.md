@@ -1,5 +1,7 @@
 # django-mysql-geventpool
 
+[![CircleCI](https://circleci.com/gh/shunsukeaihara/django-mysql-geventpool/tree/master.svg?style=svg)](https://circleci.com/gh/shunsukeaihara/django-mysql-geventpool/tree/master)
+
 Mysql Connection Pooling backend for Django 2.0+ using gevent. Only 
 
 This implimentation is based on django-db-gevent-tool(https://github.com/jneight/django-db-geventpool).
