@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tests',
     'django_mysql_geventpool',
+    'tests',
 ]
 
 MIDDLEWARE = [

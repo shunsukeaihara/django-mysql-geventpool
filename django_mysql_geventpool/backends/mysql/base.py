@@ -55,7 +55,7 @@ class ConnectionPoolMixin:
             self.pool.closeall()
         else:
             with self.wrap_database_errors:
-                if not self.in_atomic_block:
+                if not self.in_atomic_block and not self.errors_occurred:
                     self.pool.put(self.connection)
                 else:
                     self.pool.put(None)
