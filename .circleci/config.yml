@@ -7,7 +7,7 @@ jobs:
         command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_bin"]
         environment:
           - MYSQL_ROOT_PASSWORD: test
-          - MYSQL_DATABASE: test
+          - MYSQL_DATABASE: test_test
           - MYSQL_USER: test
           - MYSQL_PASSWORD: test
     steps:
