@@ -1,9 +1,12 @@
 from django.test import TestCase
 import gevent
+import gevent.monkey
 from django_mysql_geventpool.utils import close_connection
 from django.db import connections, transaction
 
 from .models import TestModel
+
+gevent.monkey.patch_all()
 
 
 @close_connection
@@ -17,9 +20,10 @@ def select_for_update_error(pk):
     try:
         with transaction.atomic():
             obj = TestModel.objects.select_for_update().get(pk=pk)
+            gevent.sleep(0.01)
             obj.data = 'a'
             obj.save()
-            raise Exception()
+            raise Exception
     except Exception:
         pass
 
