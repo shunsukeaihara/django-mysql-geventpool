@@ -5,7 +5,7 @@ setup(
     version='0.2.4',
     install_requires=['django<2.0', 'gevent'],
     description='Add a MySQL connection pool for django using gevent',
-    long_description=open("README.md").read(),
+    long_description=open("README.rst").read(),
     packages=find_packages(),
     include_package_data=True,
     license='Apache 2.0',
@@ -19,6 +19,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
-    author='aihara',
-    author_email='aihara@argmax.jp'
+    author='lollo789',
+    author_email='laurent@labatut.net'
 )
