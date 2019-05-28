@@ -15,8 +15,9 @@ jobs:
       - run:
           name: venv
           command: |
-            python -m venv venv
-            . venv/bin/activate
+            pip install virtualenv
+            virtualenv venv
+            source venv/bin/activate
             pip install tox
       - run:
           name: Wait for db
