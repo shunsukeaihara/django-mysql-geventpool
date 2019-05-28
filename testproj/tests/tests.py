@@ -1,7 +1,7 @@
 from django.test import TestCase
 import gevent
 import gevent.monkey
-from django_mysql_geventpool.utils import close_connection
+from django_mysql_geventpool_27.utils import close_connection
 from django.db import connections, transaction
 import random
 
