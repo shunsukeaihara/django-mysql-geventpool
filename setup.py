@@ -20,6 +20,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
-    author='aihara',
-    author_email='aihara@argmax.jp'
+    author='lollo789',
+    author_email='laurent@labatut.net'
 )
