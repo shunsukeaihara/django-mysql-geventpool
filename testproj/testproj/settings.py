@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_mysql_geventpool',
+    'django_mysql_geventpool_27',
     'tests',
 ]
 
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'testproj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_mysql_geventpool.backends.mysql',
+        'ENGINE': 'django_mysql_geventpool_27.backends.mysql',
         'NAME': 'test',
         'USER': 'test',
         'PASSWORD': 'test',
