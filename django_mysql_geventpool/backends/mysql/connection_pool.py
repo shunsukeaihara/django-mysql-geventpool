@@ -5,7 +5,7 @@ except ImportError as err:
     raise ImproperlyConfigured(
         'Error loading MySQLdb module.\n'
         'Did you install mysqlclient? or install PyMySQL as MySQLdb'
-    ) from err
+    )
 from ..connection_pool import DatabaseConnectionPool
 
 

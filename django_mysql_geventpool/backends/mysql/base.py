@@ -17,7 +17,7 @@ connection_pools_lock = Semaphore(value=1)
 DEFAULT_MAX_CONNS = 4
 
 
-class ConnectionPoolMixin:
+class ConnectionPoolMixin(object):
     creation_class = DatabaseCreation
 
     def __init__(self, settings_dict, *args, **kwargs):

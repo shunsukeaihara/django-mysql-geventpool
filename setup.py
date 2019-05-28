@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='django-mysql-geventpool',
+    name='django-mysql-geventpool-27',
     version='0.2.4',
-    install_requires=['django>=2.0', 'gevent'],
+    install_requires=['django<2.0', 'gevent'],
     description='Add a MySQL connection pool for django using gevent',
     long_description=open("README.md").read(),
     packages=find_packages(),
@@ -16,7 +16,7 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 2.7',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
     author='aihara',
