@@ -1,6 +1,10 @@
 from django.test import TestCase
 import gevent
 import gevent.monkey
+from django.db import connections, transaction
+from django.db.models import F
+from django.test import TestCase
+
 from django_mysql_geventpool_27.utils import close_connection
 from django.db import connections, transaction
 import random
@@ -21,11 +25,20 @@ def select_for_update_error(pk):
     try:
         with transaction.atomic():
             obj = TestModel.objects.select_for_update().get(pk=pk)
+            gevent.sleep(0.01)
             obj.data = 'a'
             obj.save()
             raise Exception
     except Exception:
         pass
+
+
+@close_connection
+def update_count(pk):
+    TestModel.objects.get_or_create(pk=pk)
+    TestModel.objects.filter(pk=pk).update(count=F('count') + 1)
+    gevent.sleep(0.01)
+
 
 
 @close_connection
@@ -76,3 +89,11 @@ class ModelTest(TestCase):
         gevent.joinall(greenlets)
         obj2 = TestModel.objects.get(pk=self.obj2.pk)
         self.assertEqual(obj2.data, "a")
+
+    def test_update_count(self):
+        greenlets = []
+        for x in range(0, 100):
+            greenlets.append(gevent.spawn(update_count, self.obj.pk))
+        gevent.joinall(greenlets)
+        obj2 = TestModel.objects.get(pk=self.obj.pk)
+        self.assertEqual(obj2.count, 100)
