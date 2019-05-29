@@ -1,4 +1,7 @@
+import copy
+import random
 import datetime
+
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
 from six import raise_from
@@ -19,7 +22,21 @@ class MysqlConnectionPool(DatabaseConnectionPool):
         super(MysqlConnectionPool, self).__init__(maxsize, maxlifetime)
 
     def create_connection(self, conn_params):
-        conn = Database.connect(**conn_params)
+        """
+
+        :param conn_params:
+        :type: dict
+        :return:
+        """
+        if 'host' in conn_params:
+            new_conn_params = copy.deepcopy(conn_params)
+            hosts = conn_params['host'].split(',')
+            host = random.choice(hosts)
+            new_conn_params['host'] = host
+            conn = Database.connect(**new_conn_params)
+        else:
+            conn = Database.connect(**conn_params)
+
         setattr(conn, CREATED_AT_KEY, timezone.now())
         return conn
 
