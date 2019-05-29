@@ -83,6 +83,7 @@ DATABASES = {
         'NAME': 'test',
         'USER': 'test',
         'PASSWORD': 'test',
+        'HOST': 'localhost,127.0.0',
         'ATOMIC_REQUESTS': False,
         'CONN_MAX_AGE': 0,
         'OPTIONS': {

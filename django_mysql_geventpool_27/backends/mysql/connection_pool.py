@@ -1,3 +1,6 @@
+import copy
+import random
+
 from django.core.exceptions import ImproperlyConfigured
 try:
     import MySQLdb as Database
@@ -14,6 +17,19 @@ class MysqlConnectionPool(DatabaseConnectionPool):
         super(MysqlConnectionPool, self).__init__(maxsize)
 
     def create_connection(self, conn_params):
+        """
+
+        :param conn_params:
+        :type: dict
+        :return:
+        """
+        if 'host' in conn_params:
+            new_conn_params = copy.deepcopy(conn_params)
+            hosts = conn_params['host'].split(',')
+            host = random.choice(hosts)
+            new_conn_params['host'] = host
+            return Database.connect(**new_conn_params)
+
         return Database.connect(**conn_params)
 
     def is_usable(self, conn):

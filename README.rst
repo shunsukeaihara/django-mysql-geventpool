@@ -6,6 +6,7 @@ django-mysql-geventpool-27
 
 Mysql Connection Pooling backend for Django < 2.0 using gevent, only supports Python 2.7
 It works with gunicorn async worker via gevent.
+It implement an **loadbalancing simple algo**.
 
 Fork from : https://github.com/shunsukeaihara/django-mysql-geventpool
 
@@ -49,6 +50,34 @@ Add MAX_CONNS to OPTIONS to set the maximun number of connections allowed to dat
             'USER': 'dbuser',
             'PASSWORD': 'dbpassword',
             'HOST': 'dbhost',
+            'PORT': 'dbport',
+            'OPTIONS': {
+                'MAX_CONNS': 20
+            }
+        }
+    }
+
+Load balancing Galera multi master
+----------------------------------
+
+For each connection, a random choice is operated on the HOST key of the DATABASE setting.
+For easy provisioning by an orchetrator like puppet/salt/ansible.., you can use this type of setting:
+
+
+
+.. note::
+
+    All server must listen on the same tcp port.
+
+.. code-block:: python
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django_mysql_geventpool_27.backends.mysql',
+            'NAME': 'dbname',
+            'USER': 'dbuser',
+            'PASSWORD': 'dbpassword',
+            'HOST': 'server1,server2,serve3',
             'PORT': 'dbport',
             'OPTIONS': {
                 'MAX_CONNS': 20
