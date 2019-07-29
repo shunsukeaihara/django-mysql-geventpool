@@ -86,7 +86,8 @@ DATABASES = {
         'ATOMIC_REQUESTS': False,
         'CONN_MAX_AGE': 0,
         'OPTIONS': {
-            'MAX_CONNS': 20
+            'MAX_CONNS': 20,
+            'MAX_LIFETIME': 10
         }
     },
 }

@@ -43,7 +43,8 @@ DATABASES = {
         'HOST': 'dbhost',
         'PORT': 'dbport',
         'OPTIONS': {
-            'MAX_CONNS': 20
+            'MAX_CONNS': 20,
+            'MAX_LIFETIME': 5 * 60  # connection lifetime in second, and if set 0, unlimited persistent connections. default is 0.
         }
     }
 }
