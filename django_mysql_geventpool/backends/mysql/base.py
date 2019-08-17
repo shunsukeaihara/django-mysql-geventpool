@@ -38,6 +38,10 @@ class ConnectionPoolMixin:
         self._max_cons = pop_max_conn(settings_dict)
         self._max_lifetime = pop_max_lifetime(settings_dict)
         super(ConnectionPoolMixin, self).__init__(settings_dict, *args, **kwargs)
+        self.prepare_pool()
+
+    def prepare_pool(self):
+        self.pool
 
     @property
     def pool(self):
