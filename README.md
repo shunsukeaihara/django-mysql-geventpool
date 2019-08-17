@@ -44,7 +44,7 @@ DATABASES = {
         'PORT': 'dbport',
         'OPTIONS': {
             'MAX_CONNS': 20,
-            'MAX_LIFETIME': 5 * 60  # connection lifetime in seconds, and if set 0, unlimited persistent connections. default is 0.
+            'MAX_LIFETIME': 5 * 60  # connection lifetime in seconds, and if set 0, unlimited persistent connections if usable. default is 0.
         }
     }
 }
