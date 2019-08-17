@@ -6,6 +6,7 @@ setup(
     install_requires=['django>=2.0', 'gevent'],
     description='Add a MySQL connection pool for django using gevent',
     long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     include_package_data=True,
     license='Apache 2.0',
