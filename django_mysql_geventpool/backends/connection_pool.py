@@ -15,6 +15,9 @@ class DatabaseConnectionPool:
         self.size = 0
 
     def get(self, conn_params):
+        conn = self._get_usable_connection()
+        if conn:
+            return conn
         if self.size >= self.maxsize or self.pool.qsize():
             conn = self.pool.get()
             if not self.is_usable(conn):
@@ -32,6 +35,19 @@ class DatabaseConnectionPool:
                 self.size -= 1
                 raise
             return conn
+
+    def _get_usable_connection(self):
+        while not self.pool.empty():
+            conn = self.pool.get_nowait()
+            if self.is_usable(conn):
+                return conn
+            else:
+                try:
+                    conn.close()
+                except Exception:
+                    pass
+                self.put(None)
+        return None
 
     def put(self, item):
         if item is None:
