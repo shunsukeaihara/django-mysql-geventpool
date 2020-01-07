@@ -1,13 +1,14 @@
 import datetime
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
+from six import raise_from
 try:
     import MySQLdb as Database
 except ImportError as err:
-    raise ImproperlyConfigured(
+    raise_from(ImproperlyConfigured(
         'Error loading MySQLdb module.\n'
         'Did you install mysqlclient? or install PyMySQL as MySQLdb'
-    ) from err
+    ), err)
 from ..connection_pool import DatabaseConnectionPool
 
 CREATED_AT_KEY = "created_at"

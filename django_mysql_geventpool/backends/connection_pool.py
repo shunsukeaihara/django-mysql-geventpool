@@ -7,7 +7,7 @@ except ImportError:
 logger = logging.getLogger('django.geventpool')
 
 
-class DatabaseConnectionPool:
+class DatabaseConnectionPool(object):
     def __init__(self, maxsize=100, maxlifetime=0):
         self.maxsize = maxsize
         self.maxlifetime = maxlifetime
