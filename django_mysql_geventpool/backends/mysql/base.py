@@ -18,7 +18,7 @@ DEFAULT_MAX_CONNS = 4
 DEFAULT_MAX_LIFETIME = 0
 
 
-class ConnectionPoolMixin:
+class ConnectionPoolMixin(object):
     creation_class = DatabaseCreation
 
     def __init__(self, settings_dict, *args, **kwargs):
