@@ -3,16 +3,10 @@ import random
 import struct
 import time
 import os
-random.seed(a=struct.unpack('i', os.urandom(4)))
+import logging
 
 from django.core.exceptions import ImproperlyConfigured
 from gevent.threading import Lock
-
-# import the logging library
-import logging
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
 
 try:
     import MySQLdb as Database
@@ -23,7 +17,14 @@ except ImportError as err:
     )
 from ..connection_pool import DatabaseConnectionPool
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+
+random.seed(a=struct.unpack('i', os.urandom(4)))
+
 HOSTS_STATUS = dict()
+
+
 class MysqlConnectionPool(DatabaseConnectionPool):
     """
 
@@ -83,6 +84,7 @@ class MysqlConnectionPool(DatabaseConnectionPool):
         else:
             return True
 
+    # noinspection PyMethodMayBeStatic
     def _get_random_host(self):
         """
         Return a host in HOSTS_STATUS where the host is up

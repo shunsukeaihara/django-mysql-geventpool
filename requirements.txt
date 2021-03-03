@@ -1,0 +1,5 @@
+gevent
+Django
+
+mysqlclient
+pymysql

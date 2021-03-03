@@ -1,3 +1,5 @@
+import logging
+
 import gevent
 import gevent.monkey
 from django.db import connections, transaction
@@ -8,8 +10,10 @@ from django_mysql_geventpool_27.utils import close_connection
 from .models import TestModel
 
 gevent.monkey.patch_all()
+logger = logging.getLogger(__name__)
 
 
+# noinspection PyUnusedLocal
 @close_connection
 def multiple_connections(count, pk):
     for x in range(0, 20):
@@ -36,9 +40,9 @@ def update_count(pk):
     gevent.sleep(0.01)
 
 
-
 @close_connection
 def create_obj(obj):
+    logger.info("*** In")
     setattr(obj, "obj", TestModel.objects.create(data="aaaaa"))
 
 
@@ -47,10 +51,14 @@ class ModelTest(TestCase):
         gevent.spawn(create_obj, self).join()
 
     def test_model_save(self):
+        logger.info("*** In")
+        print("*** IN")
         obj2 = TestModel.objects.get(pk=self.obj.pk)
         self.assertEqual(self.obj.data, obj2.data)
 
     def test_connections(self):
+        logger.info("*** In")
+        print("*** IN")
         greenlets = []
         for x in range(0, 50):
             greenlets.append(gevent.spawn(multiple_connections, x, self.obj.pk))
@@ -58,6 +66,8 @@ class ModelTest(TestCase):
         self.assertEqual(connections['default'].pool.maxsize, 20)
 
     def test_select_for_update(self):
+        logger.info("*** In")
+        print("*** IN")
         greenlets = []
         for x in range(0, 100):
             greenlets.append(gevent.spawn(select_for_update_error, self.obj.pk))
@@ -66,6 +76,8 @@ class ModelTest(TestCase):
         self.assertEqual(obj2.data, "aaaaa")
 
     def test_update_count(self):
+        logger.info("*** In")
+        print("*** IN")
         greenlets = []
         for x in range(0, 100):
             greenlets.append(gevent.spawn(update_count, self.obj.pk))
