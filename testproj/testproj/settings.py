@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django_mysql_geventpool_27.backends.mysql',
         'NAME': 'test',
-        'USER': 'test',
-        'PASSWORD': 'test',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost,127.0.0.1,nohost',
         'ATOMIC_REQUESTS': False,
         'CONN_MAX_AGE': 0,

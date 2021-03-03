@@ -54,6 +54,7 @@ class MysqlConnectionPool(DatabaseConnectionPool):
                     else:
                         for host in conn_params['host'].split(','):
                             HOSTS_STATUS[host] = 0
+
         # Deep copy param
         new_conn_params = copy.deepcopy(conn_params)
         db_connection = False
@@ -94,6 +95,7 @@ class MysqlConnectionPool(DatabaseConnectionPool):
         else:
             return True
 
+    # noinspection PyMethodMayBeStatic
     def _get_random_host(self):
         """
         Return a host in HOSTS_STATUS where the host is up

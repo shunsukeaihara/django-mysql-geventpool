@@ -1,4 +1,5 @@
-from django.test import TestCase
+import logging
+
 import gevent
 import gevent.monkey
 from django.db import connections, transaction
@@ -12,8 +13,10 @@ import random
 from .models import TestModel
 
 gevent.monkey.patch_all()
+logger = logging.getLogger(__name__)
 
 
+# noinspection PyUnusedLocal
 @close_connection
 def multiple_connections(count, pk):
     for x in range(0, 20):
@@ -55,6 +58,7 @@ def select_for_update(pk):
 
 @close_connection
 def create_obj(obj):
+    logger.info("*** In")
     setattr(obj, "obj", TestModel.objects.create(data="aaaaa"))
     setattr(obj, "obj2", TestModel.objects.create(data="bbbbb"))
 

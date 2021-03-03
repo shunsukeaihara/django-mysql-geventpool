@@ -1,4 +1,5 @@
 import logging
+
 try:
     from gevent.lock import Semaphore
 except ImportError:
@@ -22,17 +23,23 @@ class ConnectionPoolMixin(object):
     creation_class = DatabaseCreation
 
     def __init__(self, settings_dict, *args, **kwargs):
-        def pop_max_conn(settings_dict):
-            if "OPTIONS" in settings_dict:
-                return settings_dict["OPTIONS"].pop("MAX_CONNS", DEFAULT_MAX_CONNS)
+        def pop_max_conn(local_settings_dict):
+            if "OPTIONS" in local_settings_dict:
+                return local_settings_dict["OPTIONS"].pop("MAX_CONNS", DEFAULT_MAX_CONNS)
             else:
                 return DEFAULT_MAX_CONNS
-
+            
         def pop_max_lifetime(settings_dict):
             if "OPTIONS" in settings_dict:
                 return settings_dict["OPTIONS"].pop("MAX_LIFETIME", DEFAULT_MAX_LIFETIME)
             else:
                 return DEFAULT_MAX_LIFETIME
+            
+        self.alias = None
+        self.connection = None
+        self.closed_in_transaction = False
+        self.in_atomic_block = False
+        self.errors_occurred = False
         self._pool = None
         settings_dict['CONN_MAX_AGE'] = 0
         self._max_cons = pop_max_conn(settings_dict)
@@ -66,6 +73,7 @@ class ConnectionPoolMixin(object):
         if self.connection is None:
             self.pool.closeall()
         else:
+            # noinspection PyUnresolvedReferences
             with self.wrap_database_errors:
                 if not self.in_atomic_block and not self.errors_occurred:
                     self.pool.put(self.connection)
@@ -73,6 +81,7 @@ class ConnectionPoolMixin(object):
                     self.pool.put(None)
                     self.connection.close()
 
+    # noinspection PyMethodMayBeStatic
     def closeall(self):
         for pool in connection_pools.values():
             pool.closeall()

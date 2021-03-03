@@ -1,10 +1,7 @@
 import logging
-try:
-    from gevent import queue
-except ImportError:
-    from eventlet import queue
+from gevent import queue
 
-logger = logging.getLogger('django.geventpool')
+logger = logging.getLogger(__name__)
 
 
 class DatabaseConnectionPool(object):
