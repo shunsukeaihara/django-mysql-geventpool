@@ -8,9 +8,10 @@ logger = logging.getLogger('django.geventpool')
 
 
 class DatabaseConnectionPool(object):
-    def __init__(self, maxsize=100, maxlifetime=0):
+    def __init__(self, maxsize=100, maxlifetime=0, pool_pre_ping=True):
         self.maxsize = maxsize
         self.maxlifetime = maxlifetime
+        self.pool_pre_ping = pool_pre_ping
         self.pool = queue.Queue(maxsize=maxsize)
         self.size = 0
 
