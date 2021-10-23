@@ -16,6 +16,7 @@ connection_pools_lock = Semaphore(value=1)
 
 DEFAULT_MAX_CONNS = 4
 DEFAULT_MAX_LIFETIME = 0
+DEFAULT_POOL_PRE_PING = True
 
 
 class ConnectionPoolMixin(object):
@@ -33,10 +34,18 @@ class ConnectionPoolMixin(object):
                 return settings_dict["OPTIONS"].pop("MAX_LIFETIME", DEFAULT_MAX_LIFETIME)
             else:
                 return DEFAULT_MAX_LIFETIME
+
+        def pop_pool_pre_ping(settings_dict):
+            if "OPTIONS" in settings_dict:
+                return bool(settings_dict["OPTIONS"].pop("POOL_PRE_PING", DEFAULT_POOL_PRE_PING))
+            else:
+                return DEFAULT_POOL_PRE_PING
+
         self._pool = None
         settings_dict['CONN_MAX_AGE'] = 0
         self._max_cons = pop_max_conn(settings_dict)
         self._max_lifetime = pop_max_lifetime(settings_dict)
+        self._pool_pre_ping = pop_pool_pre_ping(settings_dict)
         super(ConnectionPoolMixin, self).__init__(settings_dict, *args, **kwargs)
         self.prepare_pool()
 
@@ -49,7 +58,7 @@ class ConnectionPoolMixin(object):
             return self._pool
         connection_pools_lock.acquire()
         if self.alias not in connection_pools:
-            self._pool = MysqlConnectionPool(self._max_cons, self._max_lifetime)
+            self._pool = MysqlConnectionPool(self._max_cons, self._max_lifetime, self._pool_pre_ping)
             connection_pools[self.alias] = self._pool
         else:
             self._pool = connection_pools[self.alias]

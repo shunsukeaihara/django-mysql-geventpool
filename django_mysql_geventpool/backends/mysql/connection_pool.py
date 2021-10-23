@@ -15,8 +15,8 @@ CREATED_AT_KEY = "created_at"
 
 
 class MysqlConnectionPool(DatabaseConnectionPool):
-    def __init__(self, maxsize, maxlifetime):
-        super(MysqlConnectionPool, self).__init__(maxsize, maxlifetime)
+    def __init__(self, maxsize, maxlifetime, pool_pre_ping):
+        super(MysqlConnectionPool, self).__init__(maxsize, maxlifetime, pool_pre_ping)
 
     def create_connection(self, conn_params):
         conn = Database.connect(**conn_params)
@@ -34,7 +34,8 @@ class MysqlConnectionPool(DatabaseConnectionPool):
             if timezone.now() - created_at > td:
                 return False
         try:
-            conn.ping()
+            if self.pool_pre_ping:
+                conn.ping()
         except Database.Error:
             return False
         else:
