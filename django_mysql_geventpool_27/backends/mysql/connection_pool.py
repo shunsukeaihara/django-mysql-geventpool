@@ -20,7 +20,7 @@ from ..connection_pool import DatabaseConnectionPool
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-random.seed(a=struct.unpack('i', os.urandom(4)))
+random.seed(a=os.urandom(100))
 
 HOSTS_STATUS = dict()
 
