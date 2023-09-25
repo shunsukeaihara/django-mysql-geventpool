@@ -23,6 +23,11 @@ except ImportError as err:
     ), err)
 from ..connection_pool import DatabaseConnectionPool
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+
+random.seed(a=os.urandom(100))
+
 HOSTS_STATUS = dict()
 CREATED_AT_KEY = "created_at"
 
@@ -57,6 +62,7 @@ class MysqlConnectionPool(DatabaseConnectionPool):
 
         # Deep copy param
         new_conn_params = copy.deepcopy(conn_params)
+
         db_connection = False
         ex = Exception('No Db Host available')
 
