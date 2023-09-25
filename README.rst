@@ -4,7 +4,7 @@ django-mysql-geventpool-27
 .. image:: https://circleci.com/gh/laurentL/django-mysql-geventpool/tree/master.svg?style=svg
     :target: https://circleci.com/gh/laurentL/django-mysql-geventpool/tree/master
 
-Mysql Connection Pooling backend for Django < 2.0 using gevent, only supports Python 2.7
+Mysql Connection Pooling backend for Django > 2.0 using gevent, only supports Python 3.7+
 It works with gunicorn async worker via gevent.
 It implement an **loadbalancing simple algo**.
 

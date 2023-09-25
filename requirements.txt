@@ -3,3 +3,4 @@ Django
 
 mysqlclient
 pymysql
+six
