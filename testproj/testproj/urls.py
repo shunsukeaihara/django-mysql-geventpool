@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 try:
-    from django.urls import path
-except:
+    from django.conf.urls import url
+except ImportError:
     # Django 4
-    from django.urls import re_path as path
+    from django.urls import re_path as url
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url('admin/', admin.site.urls),
 ]

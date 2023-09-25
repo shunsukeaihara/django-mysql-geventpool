@@ -1,16 +1,15 @@
 import logging
 
-try:
-    from gevent.lock import Semaphore
-except ImportError:
-    from eventlet.semaphore import Semaphore
-
 from django.db.backends.mysql.base import DatabaseWrapper as OriginalDatabaseWrapper
+
+from gevent.lock import Semaphore
+
+
+from .connection_pool import MysqlConnectionPool
 from .creation import DatabaseCreation
 from .connection_pool import MysqlConnectionPool
 
-
-logger = logging.getLogger('django.geventpool')
+logger = logging.getLogger(__name__)
 
 connection_pools = {}
 connection_pools_lock = Semaphore(value=1)
@@ -28,18 +27,19 @@ class ConnectionPoolMixin(object):
                 return local_settings_dict["OPTIONS"].pop("MAX_CONNS", DEFAULT_MAX_CONNS)
             else:
                 return DEFAULT_MAX_CONNS
-            
+
         def pop_max_lifetime(settings_dict):
             if "OPTIONS" in settings_dict:
                 return settings_dict["OPTIONS"].pop("MAX_LIFETIME", DEFAULT_MAX_LIFETIME)
             else:
                 return DEFAULT_MAX_LIFETIME
-            
+
         self.alias = None
         self.connection = None
         self.closed_in_transaction = False
         self.in_atomic_block = False
         self.errors_occurred = False
+
         self._pool = None
         settings_dict['CONN_MAX_AGE'] = 0
         self._max_cons = pop_max_conn(settings_dict)

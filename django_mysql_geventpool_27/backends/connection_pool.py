@@ -1,5 +1,8 @@
 import logging
-from gevent import queue
+try:
+    from gevent import queue
+except ImportError:
+    from eventlet import queue
 
 logger = logging.getLogger(__name__)
 

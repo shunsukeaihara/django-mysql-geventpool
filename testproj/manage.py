@@ -2,14 +2,13 @@
 import os
 import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 sys.path.insert(0, BASE_DIR)
 
 from six import raise_from
 
 if __name__ == '__main__':
     import gevent.monkey
+
     gevent.monkey.patch_all()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'testproj.settings')
     try:
